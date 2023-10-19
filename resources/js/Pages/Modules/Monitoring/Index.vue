@@ -26,7 +26,7 @@
                     <span class="input-group-text" style="cursor: pointer;" v-b-tooltip.hover title="Update Status">
                         <i class="ri-service-fill text-primary  search-icon"></i>
                     </span>
-                    <span class="input-group-text" style="cursor: pointer;" v-b-tooltip.hover title="Refresh">
+                    <span @click="refresh" class="input-group-text" style="cursor: pointer;" v-b-tooltip.hover title="Refresh">
                         <i class="bx bx-refresh text-primary  search-icon"></i>
                     </span>
                     <button @click="showFilter()" class="btn btn-primary btn-md" type="button">
@@ -195,6 +195,10 @@ export default {
         },
         view(user){
             this.$refs.view.show(user);
+        },
+        refresh(){
+            this.subfilters = [];
+            this.fetchScholars();
         }
     }
 }
