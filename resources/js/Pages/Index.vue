@@ -1,4 +1,5 @@
 <template>
+    <Head title="STSIMS" />
     <div class="layout-wrapper landing">
         <nav class="navbar navbar-expand-lg navbar-landing fixed-top" id="navbar">
             <b-container>

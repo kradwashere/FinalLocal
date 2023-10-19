@@ -27,6 +27,6 @@ createInertiaApp({
             .component("Head", Head)
             .mount(el)
     },
-    title: title => `FINAL LOCAL STSIMS | ${title}`
+    title: title => `STSIMS | ${title}`
 })
 
