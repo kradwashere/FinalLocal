@@ -42,7 +42,7 @@ class ListController extends Controller
     public function schools(Request $request){
 
         $keyword = $request->input('word');
-        $data = SchoolCampus::with('school')->with('courses.course')
+        $data = SchoolCampus::with('school','term')->with('courses.course')
         ->whereHas('school',function ($query) use ($keyword) {
             $query->where('name', 'LIKE', '%'.$keyword.'%');
         })

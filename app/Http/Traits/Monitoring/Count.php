@@ -222,7 +222,8 @@ trait Count {
     }
 
     public function semesters($request){
-        $data = SchoolSemester::where('year',$request->semester_year)->where('is_active',1)->pluck('school_id');
+        // where('year',$request->semester_year)
+        $data = SchoolSemester::where('is_active',1)->pluck('school_id');
         return $data;
     }
 

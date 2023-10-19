@@ -4,7 +4,7 @@
     <div class="chat-wrapper d-lg-flex gap-1 mx-n4 mt-n4 p-1">
         <div class="file-manager-sidebar">
             <div class="p-4 d-flex flex-column h-100">
-                <Sidebar :semester_year="semester_year"/>
+                <Sidebar :counts="counts" :semester_year="semester_year" :dropdowns="dropdowns"/>
             </div>
          </div>
 
@@ -110,15 +110,12 @@ import PageHeader from "@/Shared/Components/PageHeader.vue";
 import Pagination from "@/Shared/Components/Pagination.vue";
 export default {
     components: { PageHeader, Pagination, Sidebar, Rightbar, Filter, View, Status, Update },
-    props: ['semester_year','dropdowns','regions', 'programs', 'dropdowns', 'statuses','statuses1','checking','released'],
+    props: ['semester_year','dropdowns','regions', 'programs', 'dropdowns', 'statuses','statuses1','checking','released','counts'],
     data() {
         return {
             currentUrl: window.location.origin,
             title: "Monitoring",
             items: [{text: "Monitor", href: "/",},{text: "Dasboard",active: true,},],
-            // statuses1: [],
-            // checking: [],
-            // released: 0,
             icons: ['ri-checkbox-circle-fill text-success','ri-question-line text-warning','ri-close-circle-fill text-danger','ri-error-warning-fill text-info'],
             lists: [],
             meta: {},

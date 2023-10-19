@@ -60,6 +60,15 @@ class MonitoringController extends Controller
                 'statuses1' => $this->statuses(),
                 'checking' => $this->checking($request),
                 'released' => $this->released(),
+                'counts' => [
+                    'termination' => $this->termination($request),
+                    'enrolled' => $this->enrolled($request),
+                    'scholars' => $this->scholars($request),
+                    'semesters' => $this->semesters($request),
+                    'schools' => $this->schools(),
+                    'graduating' => [],
+                    'total' => Scholar::count()
+                ]
             ]);
         }
     }

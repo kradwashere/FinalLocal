@@ -32,7 +32,7 @@
     <hr class="text-muted"/>
 
     <h6 class="fs-11 text-muted text-uppercase mb-3">Schools Semester for {{semester_year}} </h6>
-    <div class="d-flex align-items-center">
+    <div @click="showSemester()" class="d-flex align-items-center" style="cursor:pointer;">
         <div class="flex-shrink-0">
             <i class="ri-hotel-line text-dark fs-17"></i>
         </div>
@@ -230,20 +230,22 @@
     <Unenrolled ref="unenrolled"/>
     <Benefits ref="benefits"/>
     <Grades ref="grades"/>
+    <Semester :dropdowns="dropdowns" ref="semester"/>
 </template>
 <script>
+import Semester from './Modals/Semester.vue';
 import Missed from './Modals/Sub/Missed.vue';
 import Grades from './Modals/Sub/Grades.vue';
 import Benefits from './Modals/Sub/Benefits.vue';
 import Unenrolled from './Modals/Sub/Unenrolled.vue';
 import Termination from './Modals/Sub/Termination.vue';
 export default {
-    components : { Termination, Missed, Unenrolled, Benefits, Grades },
-    props: ['semester_year'],
+    components : { Termination, Missed, Unenrolled, Benefits, Grades, Semester },
+    props: ['semester_year','dropdowns','counts'],
     data(){
         return {
             currentUrl: window.location.origin,
-            counts: { semesters: [], enrolled: [],  termination: [],  graduating: [],},
+            // counts: { semesters: [], enrolled: [],  termination: [],  graduating: [],},
             missed: {lists: [],meta: {}, links: {}},
             unenrolled: { lists: [], meta: {},links: {}},
             benefits: {lists: [], meta: {},links: {}},
@@ -251,7 +253,7 @@ export default {
         }
     },
     created(){
-        this.fetch();
+        // this.fetch();
         this.fetchMissed();
         this.fetchUnenrolled();
         this.fetchBenefits();
@@ -266,9 +268,6 @@ export default {
                 }
             },
         },
-        data() {
-            return this.$page.props.flash.data;
-        },
     },
     computed: {
         scholarsTermination: function () {
@@ -276,7 +275,10 @@ export default {
         },
         scholarsGraduating: function () {
             return (this.counts.graduating.length > 0) ? this.counts.graduating.splice(0,3) : [];
-        }
+        },
+        data() {
+            return this.$page.props.flash.data;
+        },
     },
     methods: {
         fetch(){
@@ -339,6 +341,9 @@ export default {
             if(data.length > 0){
                 this.$refs.termination.show(data);
             }
+        },
+        showSemester(){
+            this.$refs.semester.show();
         },
         openMissed(data){
             if(data.meta.total > 0){

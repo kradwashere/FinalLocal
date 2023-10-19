@@ -14,7 +14,8 @@ class IndexResource extends JsonResource
             'id' => $this->id,
             'name' => $name.' '.$campus,
             'courses' => CourseResource::collection($this->courses),
-            'region' => $this->assigned_region
+            'term' => $this->term->name,
+            'regi on' => $this->assigned_region
         ];
     }
 }
