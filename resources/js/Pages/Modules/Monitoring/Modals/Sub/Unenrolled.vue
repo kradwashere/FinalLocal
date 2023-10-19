@@ -68,7 +68,7 @@
                             <td class="text-center">{{list.level.others}}</td>
                             <td class="text-center">{{list.semester.semester.name}}</td>
                             <td class="text-center">
-                                <b-button @click="view(list)" variant="soft-primary" v-b-tooltip.hover title="View Enrollment" size="sm" class="edit-list"><i class="ri-eye-fill align-bottom"></i> </b-button>
+                                <b-button variant="soft-primary" v-b-tooltip.hover title="View Enrollment" size="sm" class="edit-list"><i class="ri-eye-fill align-bottom"></i> </b-button>
                             </td>
                         </tr>
                     </tbody>
