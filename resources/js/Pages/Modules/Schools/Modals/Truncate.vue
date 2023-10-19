@@ -1,7 +1,7 @@
 <template>
     <b-modal v-model="showModal" hide-footer header-class="p-3 bg-light" style="--vz-modal-width: 600px;" class="v-modal-custom" modal-class="zoomIn" centered no-close-on-backdrop>
         <template v-slot:header>
-            <h5 class="modal-title">Truncate Scholars</h5>
+            <h5 class="modal-title">Truncate School Semesters</h5>
             <button @click="hide()" type="button" class="btn-close" aria-label="Close"></button>
         </template>
         <div class="row justify-content-center">

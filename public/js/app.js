@@ -28735,7 +28735,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", {
   "class": "modal-title"
-}, "Truncate Scholars", -1 /* HOISTED */);
+}, "Truncate School Semesters", -1 /* HOISTED */);
 var _hoisted_2 = {
   "class": "row justify-content-center"
 };
