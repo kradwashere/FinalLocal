@@ -60,9 +60,8 @@
                         v-model="course" 
                         :options="courses"
                         :allow-empty="false"
-                        @search-change="asyncCourse"
                         :show-labels="false"
-                        label="name" track-by="id"
+                        label="course" track-by="course_id"
                         placeholder="Select Course">
                     </multiselect>
                 </div>
@@ -170,6 +169,9 @@ export default {
         municipality(){
             this.barangay = '';
             this.fetchBarangay(this.municipality.code);
+        },
+        school(){
+            this.courses = this.school.courses;
         }
     },
     methods: {
@@ -180,7 +182,8 @@ export default {
                 'municipality' : (this.municipality != null) ? this.municipality.code : '',
                 'barangay' : (this.barangay != null) ? this.barangay.code : '',
                 'school' : (this.school != null) ? this.school.id : '',
-                'course' : (this.course != null) ? this.course.id : '',
+                'course' : (this.course != null) ? this.course.course_id : '',
+                'program' : (this.program != null) ? this.program.id : '',
                 'subprogram' : (this.subprogram != null) ? this.subprogram.id : '',
             };
             this.$emit('status', this.filter);
@@ -200,17 +203,17 @@ export default {
             }
         },
 
-        asyncCourse(value) {
-            if(value.length > 5){
-                axios.post(this.currentUrl + '/lists/search/courses', {
-                    word: value,
-                })
-                .then(response => {
-                    this.courses = response.data.data;
-                })
-                .catch(err => console.log(err));
-            }
-        },
+        // asyncCourse(value) {
+        //     if(value.length > 5){
+        //         axios.post(this.currentUrl + '/lists/search/courses', {
+        //             word: value,
+        //         })
+        //         .then(response => {
+        //             this.courses = response.data.data;
+        //         })
+        //         .catch(err => console.log(err));
+        //     }
+        // },
 
         fetchProvince($id){
             axios.get(this.currentUrl + '/lists/provinces/'+$id)

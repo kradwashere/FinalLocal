@@ -23,6 +23,9 @@
                 <div class="input-group mb-1">
                     <span class="input-group-text"><i class="ri-search-line search-icon"></i></span>
                     <input type="text" placeholder="Search Scholar" v-model="keyword" class="form-control" style="width: 30%;">
+                    <span class="input-group-text" style="cursor: pointer;" v-b-tooltip.hover title="Update Status">
+                        <i class="ri-service-fill text-primary  search-icon"></i>
+                    </span>
                     <span class="input-group-text" style="cursor: pointer;" v-b-tooltip.hover title="Refresh">
                         <i class="bx bx-refresh text-primary  search-icon"></i>
                     </span>
@@ -115,6 +118,7 @@ export default {
             lists: [],
             meta: {},
             links: {},
+            subfilters: [],
             status: null,
             keyword: ''
         };
@@ -146,10 +150,12 @@ export default {
             .catch(err => console.log(err));
         },
         fetchScholars(page_url){
+            this.subfilters = (Object.keys(this.subfilters).length == 0) ? '-' : JSON.stringify(this.subfilters);
             page_url = page_url || '/monitoring';
             axios.get(page_url, {
                 params: {
                     type: 'lists',
+                    subfilters: this.subfilters,
                     counts: ((window.innerHeight-500)/56),
                     status: this.status,
                     keyword: this.keyword
@@ -182,7 +188,7 @@ export default {
         },
         subfilter(list){
             this.subfilters = list;
-            this.fetch();
+            this.fetchScholars();
         },
         showFilter(){
             this.$refs.filter.show();

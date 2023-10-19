@@ -15,7 +15,7 @@ trait Viewing {
     
     public static function lists($request){
         // $info = (!empty(json_decode($request->info))) ? json_decode($request->info) : NULL;
-        // $filter = (!empty(json_decode($request->subfilters))) ? json_decode($request->subfilters) : NULL;
+        $filter = (!empty(json_decode($request->subfilters))) ? json_decode($request->subfilters) : NULL;
         $keyword = $request->keyword;
 
         $data = IndexResource::collection(
@@ -31,6 +31,26 @@ trait Viewing {
                     ->orWhere('spas_id','LIKE','%'.$keyword.'%');
                 });
             })
+            ->whereHas('addresses',function ($query) use ($filter) {
+                if(!empty($filter)){
+                    (property_exists($filter, 'region')) ? $query->where('region_code',$filter->region)->where('is_permanent',1) : '';
+                    (property_exists($filter, 'province')) ? $query->where('province_code',$filter->province)->where('is_permanent',1) : '';
+                    (property_exists($filter, 'municipality')) ? $query->where('municipality_code',$filter->municipality)->where('is_permanent',1) : '';
+                    (property_exists($filter, 'barangay')) ? $query->where('barangay_code',$filter->barangay)->where('is_permanent',1) : '';
+                }
+            })
+            ->whereHas('education',function ($query) use ($filter) {
+                if(!empty($filter)){
+                    (property_exists($filter, 'school')) ? $query->where('school_id',$filter->school) : '';
+                    (property_exists($filter, 'course')) ? $query->where('course_id',$filter->course) : '';
+                }
+            })
+            ->where(function ($query) use ($filter) {
+                if(!empty($filter)){
+                    (property_exists($filter, 'program')) ? $query->where('program_id',$filter->program) : '';
+                    (property_exists($filter, 'subprogram')) ? $query->where('subprogram_id',$filter->subprogram) : '';
+                }
+             })
             ->whereHas('status',function ($query){
                 $query->where('type','Ongoing');
             })
