@@ -16629,8 +16629,12 @@ var _hoisted_14 = {
   key: 0,
   "class": "haveerror"
 };
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "select a course", -1 /* HOISTED */);
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "No prospectus found.", -1 /* HOISTED */);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_multiselect = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("multiselect");
+  var _component_b_alert = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("b-alert");
   var _component_b_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("b-button");
   var _component_b_modal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("b-modal");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_b_modal, {
@@ -16666,7 +16670,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Cancel")];
         }),
         _: 1 /* STABLE */
-      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_b_button, {
+      }), $data.subcourses.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_b_button, {
+        key: 0,
         onClick: _cache[4] || (_cache[4] = function ($event) {
           return $options.create('ok');
         }),
@@ -16678,7 +16683,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Save")];
         }),
         _: 1 /* STABLE */
-      }, 8 /* PROPS */, ["disabled"])];
+      }, 8 /* PROPS */, ["disabled"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
@@ -16703,7 +16708,27 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         options: $data.subcourses,
         "allow-empty": false,
         "show-labels": false
-      }, null, 8 /* PROPS */, ["modelValue", "options"])])])], 32 /* HYDRATE_EVENTS */)];
+      }, null, 8 /* PROPS */, ["modelValue", "options"])])])], 32 /* HYDRATE_EVENTS */), $data.subcourses.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_b_alert, {
+        key: 0,
+        show: "",
+        variant: "warning",
+        "class": "mt-4"
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Please "), _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" to continue enrollment. ")];
+        }),
+        _: 1 /* STABLE */
+      })) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_b_alert, {
+        key: 1,
+        show: "",
+        variant: "danger",
+        "class": "mt-4"
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Please add a prospectus for this course. ")];
+        }),
+        _: 1 /* STABLE */
+      }))];
     }),
 
     _: 1 /* STABLE */

@@ -37,9 +37,16 @@
                 </div>
             </div>
         </form>
+        <b-alert show variant="warning" class="mt-4" v-if="subcourses.length > 0">
+            Please <b>select a course</b> to continue enrollment.
+        </b-alert>
+        <b-alert show variant="danger" class="mt-4" v-else>
+            <b>No prospectus found.</b> Please add a prospectus for this course.
+        </b-alert>
+    
         <template v-slot:footer>
             <b-button @click="hide()" variant="light" block>Cancel</b-button>
-            <b-button @click="create('ok')" variant="primary" :disabled="form.processing" block>Save</b-button>
+            <b-button v-if="subcourses.length > 0" @click="create('ok')" variant="primary" :disabled="form.processing" block>Save</b-button>
         </template>
     </b-modal>
 </template>
