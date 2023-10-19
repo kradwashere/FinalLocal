@@ -23,7 +23,7 @@
                 <div class="input-group mb-1">
                     <span class="input-group-text"><i class="ri-search-line search-icon"></i></span>
                     <input type="text" placeholder="Search Scholar" v-model="keyword" class="form-control" style="width: 30%;">
-                    <span class="input-group-text" style="cursor: pointer;" v-b-tooltip.hover title="Update Status">
+                    <span @click="showStatus()"  class="input-group-text" style="cursor: pointer;" v-b-tooltip.hover title="Update Status">
                         <i class="ri-service-fill text-primary  search-icon"></i>
                     </span>
                     <span @click="refresh" class="input-group-text" style="cursor: pointer;" v-b-tooltip.hover title="Refresh">
@@ -95,8 +95,10 @@
     </div>
     <Filter :regions="regions" :programs="programs" @status="subfilter" ref="filter"/>
     <View ref="view"/>
+    <Status ref="status"/>
 </template>
 <script>
+import Status from './Modals/Status.vue';
 import View from './Modals/View.vue';
 import Filter from './Modals/Filter.vue';
 import Sidebar from './Sidebar.vue';
@@ -104,7 +106,7 @@ import Rightbar from './Rightbar.vue';
 import PageHeader from "@/Shared/Components/PageHeader.vue";
 import Pagination from "@/Shared/Components/Pagination.vue";
 export default {
-    components: { PageHeader, Pagination, Sidebar, Rightbar, Filter, View },
+    components: { PageHeader, Pagination, Sidebar, Rightbar, Filter, View, Status },
     props: ['semester_year','dropdowns','regions', 'programs', 'dropdowns', 'statuses'],
     data() {
         return {
@@ -192,6 +194,9 @@ export default {
         },
         showFilter(){
             this.$refs.filter.show();
+        },
+        showStatus(){
+            this.$refs.status.show();
         },
         view(user){
             this.$refs.view.show(user);
