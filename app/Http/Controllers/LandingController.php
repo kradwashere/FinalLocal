@@ -6,8 +6,8 @@ use App\Models\ListCourse;
 use App\Models\SchoolCampus;
 use Illuminate\Http\Request;
 use App\Http\Resources\DefaultResource;
-use App\Http\Resources\Schools\PublicResource;
-use App\Http\Resources\Schools\PublicCourse2Resource;
+use App\Http\Resources\School\PublicResource;
+use App\Http\Resources\School\PublicCourse2Resource;
 
 class LandingController extends Controller
 {
