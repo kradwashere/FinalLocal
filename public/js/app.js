@@ -4973,7 +4973,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     Status: _Modals_Status_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     Update: _Scholars_Modals_Update_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
-  props: ['semester_year', 'dropdowns', 'regions', 'programs', 'dropdowns', 'statuses'],
+  props: ['semester_year', 'dropdowns', 'regions', 'programs', 'dropdowns', 'statuses', 'statuses1', 'checking', 'released'],
   data: function data() {
     return {
       currentUrl: window.location.origin,
@@ -4985,9 +4985,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         text: "Dasboard",
         active: true
       }],
-      statuses1: [],
-      checking: [],
-      released: 0,
+      // statuses1: [],
+      // checking: [],
+      // released: 0,
       icons: ['ri-checkbox-circle-fill text-success', 'ri-question-line text-warning', 'ri-close-circle-fill text-danger', 'ri-error-warning-fill text-info'],
       lists: [],
       meta: {},
@@ -4999,7 +4999,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     };
   },
   created: function created() {
-    this.fetch();
     this.fetchScholars();
   },
   watch: {
@@ -5011,22 +5010,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     checkSearchStr: _.debounce(function (string) {
       this.fetchScholars();
     }, 300),
-    fetch: function fetch() {
-      var _this = this;
-      axios.get(this.currentUrl + '/monitoring', {
-        params: {
-          type: 'index'
-        }
-      }).then(function (response) {
-        _this.statuses1 = response.data.statuses;
-        _this.checking = response.data.checking;
-        _this.released = response.data.released;
-      })["catch"](function (err) {
-        return console.log(err);
-      });
-    },
     fetchScholars: function fetchScholars(page_url) {
-      var _this2 = this;
+      var _this = this;
       this.subfilters = Object.keys(this.subfilters).length == 0 ? '-' : JSON.stringify(this.subfilters);
       page_url = page_url || '/monitoring';
       axios.get(page_url, {
@@ -5038,9 +5023,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
           keyword: this.keyword
         }
       }).then(function (response) {
-        _this2.lists = response.data.data;
-        _this2.meta = response.data.meta;
-        _this2.links = response.data.links;
+        _this.lists = response.data.data;
+        _this.meta = response.data.meta;
+        _this.links = response.data.links;
       })["catch"](function (err) {
         return console.log(err);
       });
@@ -21500,7 +21485,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     items: $data.items
   }, null, 8 /* PROPS */, ["title", "items"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Sidebar, {
     semester_year: $props.semester_year
-  }, null, 8 /* PROPS */, ["semester_year"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.checking, function (list, index) {
+  }, null, 8 /* PROPS */, ["semester_year"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.checking, function (list, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "col-sm-4 col-6",
       key: index
@@ -21605,8 +21590,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     links: $data.links,
     pagination: $data.meta
   }, null, 8 /* PROPS */, ["onFetch", "lists", "links", "pagination"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 512 /* NEED_PATCH */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Rightbar, {
-    statuses: $data.statuses1,
-    released: $data.released
+    statuses: $props.statuses1,
+    released: $props.released
   }, null, 8 /* PROPS */, ["statuses", "released"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Filter, {
     regions: $props.regions,
     programs: $props.programs,

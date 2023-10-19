@@ -55,7 +55,12 @@ class MonitoringController extends Controller
                 return $this->monitoring($request);
             break;
             default : 
-            return inertia('Modules/Monitoring/Index');
+            return inertia('Modules/Monitoring/Index',
+            [
+                'statuses1' => $this->statuses(),
+                'checking' => $this->checking($request),
+                'released' => $this->released(),
+            ]);
         }
     }
 

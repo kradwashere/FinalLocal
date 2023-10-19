@@ -110,15 +110,15 @@ import PageHeader from "@/Shared/Components/PageHeader.vue";
 import Pagination from "@/Shared/Components/Pagination.vue";
 export default {
     components: { PageHeader, Pagination, Sidebar, Rightbar, Filter, View, Status, Update },
-    props: ['semester_year','dropdowns','regions', 'programs', 'dropdowns', 'statuses'],
+    props: ['semester_year','dropdowns','regions', 'programs', 'dropdowns', 'statuses','statuses1','checking','released'],
     data() {
         return {
             currentUrl: window.location.origin,
             title: "Monitoring",
             items: [{text: "Monitor", href: "/",},{text: "Dasboard",active: true,},],
-            statuses1: [],
-            checking: [],
-            released: 0,
+            // statuses1: [],
+            // checking: [],
+            // released: 0,
             icons: ['ri-checkbox-circle-fill text-success','ri-question-line text-warning','ri-close-circle-fill text-danger','ri-error-warning-fill text-info'],
             lists: [],
             meta: {},
@@ -130,7 +130,6 @@ export default {
         };
     },
     created(){
-        this.fetch();
         this.fetchScholars();
     },
      watch: {
@@ -142,19 +141,6 @@ export default {
         checkSearchStr: _.debounce(function(string) {
             this.fetchScholars();
         }, 300),
-        fetch(){
-            axios.get(this.currentUrl+'/monitoring', {
-                params: {
-                    type: 'index'
-                }
-            })
-            .then(response => {
-                this.statuses1 = response.data.statuses;
-                this.checking = response.data.checking;
-                this.released = response.data.released;
-            })
-            .catch(err => console.log(err));
-        },
         fetchScholars(page_url){
             this.subfilters = (Object.keys(this.subfilters).length == 0) ? '-' : JSON.stringify(this.subfilters);
             page_url = page_url || '/monitoring';
