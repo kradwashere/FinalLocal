@@ -40,7 +40,7 @@
             <li v-if="scholar.education.school.semester">
                 <div v-if="!scholar.education.school.is_enrolled" class="alert alert-warning alert-dismissible alert-label-icon rounded-label" role="alert">
                     <i class="ri-alert-line label-icon"></i>Scholar is not Enrolled 
-                    <button @click="viewEnroll()" class="btn btn-primary btn-sm float-end" style="margin-right: -40px; margin-top: -3px;" type="button"><div class="btn-content"> Enroll now</div></button>
+                    <!-- <button @click="viewEnroll()" class="btn btn-primary btn-sm float-end" style="margin-right: -40px; margin-top: -3px;" type="button"><div class="btn-content"> Enroll now</div></button> -->
                 </div>
                 <div v-else class="alert alert-secondary alert-dismissible alert-label-icon rounded-label" role="alert">
                     <i class="ri-check-double-line label-icon"></i>Scholar is currently enrolled 
