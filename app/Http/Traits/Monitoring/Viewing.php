@@ -92,7 +92,7 @@ trait Viewing {
             $query->select('id','name','others');
         })
         ->withWhereHas('lists', function ($query){
-            $query->select('id','enrollment_id','code','subject','unit','grade');
+            $query->select('id','enrollment_id','code','subject','unit','grade','is_failed');
         })
         ->withWhereHas('benefits', function ($query){
             $query->select('id','enrollment_id','amount','month','benefit_id','status_id')
