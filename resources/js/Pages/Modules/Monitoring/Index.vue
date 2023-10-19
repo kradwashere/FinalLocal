@@ -34,16 +34,7 @@
                     <li class="list-inline-item text-danger fw-semibold"><i
                             class="ri-search-eye-line align-middle"></i> Filters:</li>
                     <li class="list-inline-item">
-                        <b-link href="#">Design,</b-link>
-                    </li>
-                    <li class="list-inline-item">
-                        <b-link href="#">Development,</b-link>
-                    </li>
-                    <li class="list-inline-item">
-                        <b-link href="#">Manager,</b-link>
-                    </li>
-                    <li class="list-inline-item">
-                        <b-link href="#">Senior</b-link>
+                        <b-link href="#">Testing</b-link>
                     </li>
                 </ul>
             </div>
