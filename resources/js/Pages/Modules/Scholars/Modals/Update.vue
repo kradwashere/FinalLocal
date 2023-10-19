@@ -44,7 +44,7 @@
                         label="name" track-by="id"
                         placeholder="Select Status" 
                         open-direction="bottom" 
-                        :options="status_lists"
+                        :options="(sub == 'ongoing') ? status_ongoing : status_lists"
                         :searchable="true" 
                         :allow-empty="false"
                         :show-labels="false">
@@ -176,7 +176,8 @@ export default {
             form: {},
             type: '',
             status: '',
-            has_award: false
+            has_award: false,
+            sub: ''
         }
     },
     computed:{
@@ -188,10 +189,14 @@ export default {
         },
         status_lists : function() {
             return this.statuses.filter(x => x.type === 'Progress' || x.type === 'Ongoing');
+        },
+        status_ongoing : function() {
+            return this.statuses.filter(x => x.type === 'Ongoing');
         }
     },
     methods : {
-        show(data,type){
+        show(data,type,sub = null){
+            this.sub = sub;
             this.type = type;
             this.user = data;
             this.errors = [];

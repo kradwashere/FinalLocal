@@ -78,6 +78,7 @@
                                 <span :class="'badge '+user.status.color+' '+user.status.others">{{user.status.name}}</span>
                             </td>
                             <td class="text-end">
+                                <b-button @click="showUpdate(user,'status',index,'ongoing')" variant="soft-warning" v-b-tooltip.hover title="Update Status" size="sm" class="remove-list me-1"><i class="ri-heart-fill align-bottom"></i></b-button>
                                <b-button @click="view(user)" variant="soft-primary" v-b-tooltip.hover title="View Scholar" size="sm" class="remove-list me-1"><i class="ri-eye-fill align-bottom"></i></b-button>
                             </td>
                         </tr>
@@ -89,13 +90,14 @@
 
         <div class="file-manager-sidebar">
             <div class="p-4 d-flex flex-column h-100">
-                <Rightbar :statuses="statuses" :released="released"/>
+                <Rightbar :statuses="statuses1" :released="released"/>
             </div>
          </div>
     </div>
     <Filter :regions="regions" :programs="programs" @status="subfilter" ref="filter"/>
     <View ref="view"/>
     <Status ref="status"/>
+    <Update ref="update" :statuses="statuses" :dropdowns="dropdowns"/>
 </template>
 <script>
 import Status from './Modals/Status.vue';
@@ -103,17 +105,18 @@ import View from './Modals/View.vue';
 import Filter from './Modals/Filter.vue';
 import Sidebar from './Sidebar.vue';
 import Rightbar from './Rightbar.vue';
+import Update from '../Scholars/Modals/Update.vue';
 import PageHeader from "@/Shared/Components/PageHeader.vue";
 import Pagination from "@/Shared/Components/Pagination.vue";
 export default {
-    components: { PageHeader, Pagination, Sidebar, Rightbar, Filter, View, Status },
+    components: { PageHeader, Pagination, Sidebar, Rightbar, Filter, View, Status, Update },
     props: ['semester_year','dropdowns','regions', 'programs', 'dropdowns', 'statuses'],
     data() {
         return {
             currentUrl: window.location.origin,
             title: "Monitoring",
             items: [{text: "Monitor", href: "/",},{text: "Dasboard",active: true,},],
-            statuses: [],
+            statuses1: [],
             checking: [],
             released: 0,
             icons: ['ri-checkbox-circle-fill text-success','ri-question-line text-warning','ri-close-circle-fill text-danger','ri-error-warning-fill text-info'],
@@ -122,7 +125,8 @@ export default {
             links: {},
             subfilters: [],
             status: null,
-            keyword: ''
+            keyword: '',
+            flag: null
         };
     },
     created(){
@@ -145,7 +149,7 @@ export default {
                 }
             })
             .then(response => {
-                this.statuses = response.data.statuses;
+                this.statuses1 = response.data.statuses;
                 this.checking = response.data.checking;
                 this.released = response.data.released;
             })
@@ -197,6 +201,11 @@ export default {
         },
         showStatus(){
             this.$refs.status.show();
+        },
+        showUpdate(data,type,index,sub){
+            this.flag = type;
+            this.index = index;
+            this.$refs.update.show(data,type,sub);
         },
         view(user){
             this.$refs.view.show(user);
