@@ -85,7 +85,7 @@
             </li>
         </ul>
     </div>
-    <Course ref="course"/>
+    <Course ref="course" @message="scholar = null"/>
 </template>
 <script>
 import Course from './Modals/Course.vue';

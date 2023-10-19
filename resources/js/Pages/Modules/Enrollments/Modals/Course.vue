@@ -96,6 +96,7 @@
             },
 
             hide(){
+                this.$emit('message',true);
                 (this.form.hasOwnProperty('reset') ) ? this.form.reset().clearErrors() : this.subcourse = '';
                 this.showModal = false;
             },

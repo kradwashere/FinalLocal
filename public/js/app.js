@@ -2379,6 +2379,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     hide: function hide() {
+      this.$emit('message', true);
       this.form.hasOwnProperty('reset') ? this.form.reset().clearErrors() : this.subcourse = '';
       this.showModal = false;
     }
@@ -17964,7 +17965,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(list.semester.academic_year) + " ", 1 /* TEXT */), _hoisted_50, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_51, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(list.level.others), 1 /* TEXT */), _hoisted_52, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(list.semester.semester.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("small", _hoisted_54, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(list.created_at), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_48)])])])]);
   }), 128 /* KEYED_FRAGMENT */))])])])]))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Course, {
-    ref: "course"
+    ref: "course",
+    onMessage: _cache[2] || (_cache[2] = function ($event) {
+      return $data.scholar = null;
+    })
   }, null, 512 /* NEED_PATCH */)], 64 /* STABLE_FRAGMENT */);
 }
 
