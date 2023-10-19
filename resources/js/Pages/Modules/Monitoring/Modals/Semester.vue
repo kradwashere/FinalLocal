@@ -158,6 +158,15 @@ export default {
 
         hide(){
             this.$emit('status', true);
+            this. semester = {
+                school: '',
+                from: '',
+                to: '',
+                start: '',
+                end: '',
+                year: '',
+                semester: {}
+            },
             (this.form.hasOwnProperty('reset') ) ? this.form.reset().clearErrors() : this.semester = {};
             this.showModal = false;
         },

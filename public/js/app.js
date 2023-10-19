@@ -5579,7 +5579,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     hide: function hide() {
       this.$emit('status', true);
-      this.form.hasOwnProperty('reset') ? this.form.reset().clearErrors() : this.semester = {};
+      this.semester = {
+        school: '',
+        from: '',
+        to: '',
+        start: '',
+        end: '',
+        year: '',
+        semester: {}
+      }, this.form.hasOwnProperty('reset') ? this.form.reset().clearErrors() : this.semester = {};
       this.showModal = false;
     },
     disabledBeforeTodayAndAfterAWeek: function disabledBeforeTodayAndAfterAWeek(date) {
