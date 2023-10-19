@@ -67,7 +67,7 @@
                                 <h5 class="fs-12 mb-0 text-dark">{{ list.academic_year }}</h5>
                             </td>
                             <td class="text-center">{{list.semester}}</td>
-                            <td class="text-center">{{list.level}}</td>
+                            <td class="text-center">{{list.level.others}}</td>
                             <td class="text-center">{{calculateTotalSum(scholar.enrollments)}}</td>
                             <!-- <td class="text-center">
                                 <b-button @click="view(list)" variant="soft-primary" v-b-tooltip.hover title="View Enrollment" size="sm" class="edit-list"><i class="ri-eye-fill align-bottom"></i> </b-button>
