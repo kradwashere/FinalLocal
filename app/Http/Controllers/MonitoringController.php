@@ -19,12 +19,12 @@ class MonitoringController extends Controller
             case 'counts':
                 $array = [
                     'termination' => $this->termination($request),
-                    'enrolled' => $this->enrolled($request),
-                    'scholars' => $this->scholars($request),
-                    'semesters' => $this->semesters($request),
-                    'schools' => $this->schools(),
+                    // 'enrolled' => $this->enrolled($request),
+                    // 'scholars' => $this->scholars($request),
+                    // 'semesters' => $this->semesters($request),
+                    // 'schools' => $this->schools(),
                     'graduating' => [],
-                    'total' => Scholar::count()
+                    // 'total' => Scholar::count()
                 ];
                 return $array;
             break;

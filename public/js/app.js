@@ -6336,11 +6336,14 @@ __webpack_require__.r(__webpack_exports__);
     Grades: _Modals_Sub_Grades_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     Semester: _Modals_Semester_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ['semester_year', 'dropdowns', 'counts'],
+  props: ['semester_year', 'dropdowns', 'counts', 'counts'],
   data: function data() {
     return {
       currentUrl: window.location.origin,
-      // counts: { semesters: [], enrolled: [],  termination: [],  graduating: [],},
+      counts2: {
+        termination: [],
+        graduating: []
+      },
       missed: {
         lists: [],
         meta: {},
@@ -6360,11 +6363,12 @@ __webpack_require__.r(__webpack_exports__);
         lists: [],
         meta: {},
         links: {}
-      }
+      },
+      scholarsTermination: []
     };
   },
   created: function created() {
-    // this.fetch();
+    this.fetch();
     this.fetchMissed();
     this.fetchUnenrolled();
     this.fetchBenefits();
@@ -6383,10 +6387,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     scholarsTermination: function scholarsTermination() {
-      return this.counts.termination.length > 0 ? this.counts.termination.splice(0, 3) : [];
+      return this.counts2.termination.length > 0 ? this.counts2.termination.splice(0, 3) : [];
     },
     scholarsGraduating: function scholarsGraduating() {
-      return this.counts.graduating.length > 0 ? this.counts.graduating.splice(0, 3) : [];
+      return this.counts2.graduating.length > 0 ? this.counts2.graduating.splice(0, 3) : [];
     },
     data: function data() {
       return this.$page.props.flash.data;
@@ -6401,7 +6405,7 @@ __webpack_require__.r(__webpack_exports__);
           semester_year: this.semester_year
         }
       }).then(function (response) {
-        _this.counts = response.data;
+        _this.counts2 = response.data;
       })["catch"](function (err) {
         return console.log(err);
       });

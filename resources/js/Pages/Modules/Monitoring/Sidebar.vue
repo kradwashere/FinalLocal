@@ -241,19 +241,20 @@ import Unenrolled from './Modals/Sub/Unenrolled.vue';
 import Termination from './Modals/Sub/Termination.vue';
 export default {
     components : { Termination, Missed, Unenrolled, Benefits, Grades, Semester },
-    props: ['semester_year','dropdowns','counts'],
+    props: ['semester_year','dropdowns','counts','counts'],
     data(){
         return {
             currentUrl: window.location.origin,
-            // counts: { semesters: [], enrolled: [],  termination: [],  graduating: [],},
+            counts2: { termination: [],  graduating: [],},
             missed: {lists: [],meta: {}, links: {}},
             unenrolled: { lists: [], meta: {},links: {}},
             benefits: {lists: [], meta: {},links: {}},
-            grades: {lists: [], meta: {},links: {}}
+            grades: {lists: [], meta: {},links: {}},
+            scholarsTermination: []
         }
     },
     created(){
-        // this.fetch();
+        this.fetch();
         this.fetchMissed();
         this.fetchUnenrolled();
         this.fetchBenefits();
@@ -271,10 +272,10 @@ export default {
     },
     computed: {
         scholarsTermination: function () {
-            return (this.counts.termination.length > 0) ? this.counts.termination.splice(0,3) : [];
+            return (this.counts2.termination.length > 0) ? this.counts2.termination.splice(0,3) : [];
         },
         scholarsGraduating: function () {
-            return (this.counts.graduating.length > 0) ? this.counts.graduating.splice(0,3) : [];
+            return (this.counts2.graduating.length > 0) ? this.counts2.graduating.splice(0,3) : [];
         },
         data() {
             return this.$page.props.flash.data;
@@ -289,7 +290,7 @@ export default {
                 }
             })
             .then(response => {
-                this.counts = response.data;
+                this.counts2 = response.data;
             })
             .catch(err => console.log(err));
         },
