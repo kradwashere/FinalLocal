@@ -6,7 +6,7 @@
                 :options="defaultOptions1" :height="120" :width="120" />
             <div class="mt-n3">
                 <!-- <h4 class="mb-3">You've made it!</h4> -->
-                <i class="ri-alert-fill fs-24 text-danger mb-4"></i>
+                <i style="font-size: 40px;" class="ri-alert-fill text-danger mb-4"></i>
                 <p class="mb-2 mt-2">We have identified some changes in your prospectus.</p>
                 <p class="text-muted fs-11 mb-4">To prevent future errors, please ensure the prospectus is updated accordingly, as enrollment is based on the prospectus.</p>
                 <div class="hstack gap-2 justify-content-center mt-3">

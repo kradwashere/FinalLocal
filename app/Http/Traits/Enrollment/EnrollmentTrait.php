@@ -58,7 +58,8 @@ trait EnrollmentTrait {
         return back()->with([
             'message' => 'Scholar enrolled successfully. Thanks',
             'data' =>  new SearchResource($data),
-            'type' => 'bxs-check-circle'
+            'type' => 'bxs-check-circle',
+            'color' => 'success'
         ]); 
     }
 

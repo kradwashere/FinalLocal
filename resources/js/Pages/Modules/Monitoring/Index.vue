@@ -69,7 +69,7 @@
                                 <p class="fs-11 text-muted mb-0">{{user.spas_id}}</p>
                             </td>
                             <td class="text-center fs-12" style="cursor: default;">
-                                <span>{{user.program}}</span>
+                                <span>{{user.education.course.name}}</span>
                             </td>
                             <td class="text-center fs-12" style="cursor: default;">
                                 <span v-b-tooltip.hover :title="user.education.school.name">{{user.education.school.shortcut}}</span>
@@ -123,6 +123,7 @@ export default {
             subfilters: [],
             status: null,
             keyword: '',
+            page: '',
             flag: null
         };
     },
@@ -131,7 +132,7 @@ export default {
     },
      watch: {
         keyword(newVal){
-            this.checkSearchStr(newVal)
+            this.checkSearchStr(newVal);
         }
     },
     methods: {
@@ -139,8 +140,8 @@ export default {
             this.fetchScholars();
         }, 300),
         fetchScholars(page_url){
-            this.subfilters = (Object.keys(this.subfilters).length == 0) ? '-' : JSON.stringify(this.subfilters);
             page_url = page_url || '/monitoring';
+            
             axios.get(page_url, {
                 params: {
                     type: 'lists',
@@ -177,6 +178,7 @@ export default {
         },
         subfilter(list){
             this.subfilters = list;
+            this.subfilters = (Object.keys(this.subfilters).length == 0) ? '-' : JSON.stringify(this.subfilters);
             this.fetchScholars();
         },
         showFilter(){

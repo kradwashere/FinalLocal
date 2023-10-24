@@ -63,7 +63,6 @@ export default {
             education_id: ''
         }
     },
-
     methods : {
         set(prospectus,id,education_id){
             this.id = id;
@@ -83,6 +82,7 @@ export default {
             })
             .then(response => {
                 this.active = response.data;
+                console.log(this.pros);
                 if(this.active.id != this.pros.id){
                     this.$refs.prospectus.show(this.active,this.education_id,this.id);
                 }

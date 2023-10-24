@@ -2982,6 +2982,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this.active = response.data;
+        console.log(_this.pros);
         if (_this.active.id != _this.pros.id) {
           _this.$refs.prospectus.show(_this.active, _this.education_id, _this.id);
         }
@@ -3073,6 +3074,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     viewProspectus: function viewProspectus() {
+      this.show = 'prospectus';
       this.$parent.prospectus('prospectus', this.scholar.education.info, this.scholar.education.subcourse.id, this.scholar.education.id);
     },
     viewEnroll: function viewEnroll(enrollment) {
@@ -3090,6 +3092,9 @@ __webpack_require__.r(__webpack_exports__);
           this.show = 'assessment';
           break;
         case 'course':
+          this.choose(list);
+          break;
+        case 'prospectus':
           this.choose(list);
           break;
       }
@@ -5070,6 +5075,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       subfilters: [],
       status: null,
       keyword: '',
+      page: '',
       flag: null
     };
   },
@@ -5087,7 +5093,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     }, 300),
     fetchScholars: function fetchScholars(page_url) {
       var _this = this;
-      this.subfilters = Object.keys(this.subfilters).length == 0 ? '-' : JSON.stringify(this.subfilters);
       page_url = page_url || '/monitoring';
       axios.get(page_url, {
         params: {
@@ -5129,6 +5134,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     subfilter: function subfilter(list) {
       this.subfilters = list;
+      this.subfilters = Object.keys(this.subfilters).length == 0 ? '-' : JSON.stringify(this.subfilters);
       this.fetchScholars();
     },
     showFilter: function showFilter() {
@@ -16426,7 +16432,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Prospectus = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Prospectus");
   var _component_Enrollment = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Enrollment");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Head, {
-    title: "Qualifiers"
+    title: "Enrollments"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_PageHeader, {
     title: $data.title,
     items: $data.items
@@ -17234,7 +17240,10 @@ var _hoisted_2 = {
   "class": "mt-n3"
 };
 var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "ri-alert-fill fs-24 text-danger mb-4"
+  style: {
+    "font-size": "40px"
+  },
+  "class": "ri-alert-fill text-danger mb-4"
 }, null, -1 /* HOISTED */);
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "mb-2 mt-2"
@@ -21813,7 +21822,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, null, 8 /* PROPS */, _hoisted_31), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
       "class": "user-status",
       style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(user.profile.sex == 'Male' ? 'background-color: #5cb0e5;' : 'background-color: #e55c7f;')
-    }, null, 4 /* STYLE */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(user.profile.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(user.spas_id), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(user.program), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+    }, null, 4 /* STYLE */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(user.profile.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(user.spas_id), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(user.education.course.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
       title: user.education.school.name
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(user.education.school.shortcut), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_36)), [[_directive_b_tooltip, void 0, void 0, {
       hover: true

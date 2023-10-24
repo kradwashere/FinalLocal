@@ -13,22 +13,27 @@ use App\Http\Resources\DefaultResource;
 trait Save { 
     
     public static function semester($request){
-        $data = new DefaultResource(SchoolSemester::create($request->all()));
+        $data = SchoolSemester::create($request->all());
         $update = SchoolSemester::where('id','!=',$data->id)->where('school_id',$data->school_id)->update(['is_active' => false]);
+        $data = SchoolSemester::with('semester')->where('id',$data->id)->first();
         if($data){
+            $semester = $data->semester->name;
             $school_id = $data->school_id;
             $semester_id = $data->id;
             $scholars = Scholar::select('id')->whereHas('status',function ($query){
                 $query->where('type','ongoing');
             })->withWhereHas('education',function ($query) use ($school_id){
-                $query->select('id','scholar_id','level_id')->where('school_id',$school_id);
+                $query->select('id','scholar_id','level_id')->where('school_id',$school_id)
+                ->withWhereHas('level',function ($query){
+                    $query->select('id','name','others');
+                });
             })->get();
         
-            $enrollmentsData = $scholars->map(function ($scholar) use ($semester_id){
-                return [
+            $enrollmentsData = $scholars->map(function ($scholar) use ($semester_id,$semester){
+                $fill = [
                     'scholar_id' => $scholar->id,
                     'semester_id' => $semester_id,
-                    'level_id' => ($scholar->education->level_id) ? $scholar->education->level_id : 24 ,
+                    'level_id' => $scholar->education->level_id ,
                     'attachment' => json_encode([
                         'grades' => [],
                         'enrollments' => []
@@ -36,13 +41,33 @@ trait Save {
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
+                if($semester == 'Summer'){
+                    if($scholar->education->level->others == 'Third Year'){
+                        return $fill;
+                    }else{
+                        return [];
+                    }
+                }else{
+                    return $fill;
+                }
+               
+                // $information = json_decode($scholar->education->information);
+                // if(isset($information->checker)){
+                //     foreach ($information->checker as $record) {
+                //         if ($record["year"] === $scholar->education->level->others && $record["semester"] === $semester) {
+                //             $is_empty = $record["is_empty"];
+                //             break; 
+                //         }
+                //     }
+                // }else{
+                  
+                // }
             });
-            // dd($enrollmentsData);
             $enrollments = ScholarEnrollment::insert($enrollmentsData->all());
         }
 
         return back()->with([
-            'data' => $data,
+            'data' => new DefaultResource($data),
             'message' => 'Semester successfully created. Thanks',
             'type' => 'bxs-check-circle',
             'color' => 'success'

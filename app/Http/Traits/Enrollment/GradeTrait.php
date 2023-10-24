@@ -47,7 +47,8 @@ trait GradeTrait {
         return back()->with([
             'message' => 'Scholar grades updated successfully. Thanks',
             'data' =>  new EnrollmentResource($data),
-            'type' => 'bxs-check-circle'
+            'type' => 'bxs-check-circle',
+            'color' => 'success'
         ]); 
     }
 
@@ -96,7 +97,8 @@ trait GradeTrait {
         return back()->with([
             'message' => 'Scholar grades unlocked successfully. Thanks',
             'data' =>  new EnrollmentResource($data),
-            'type' => 'bxs-check-circle'
+            'type' => 'bxs-check-circle',
+            'color' => 'success'
         ]); 
     }
 
@@ -156,7 +158,8 @@ trait GradeTrait {
         return back()->with([
             'message' => 'Scholar grades locked successfully. Thanks',
             'data' =>  new EnrollmentResource($data),
-            'type' => 'bxs-check-circle'
+            'type' => 'bxs-check-circle',
+            'color' => 'success'
         ]); 
     }
 }

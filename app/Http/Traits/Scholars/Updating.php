@@ -76,16 +76,37 @@ trait Updating {
                 'id' => $pros->id,
                 'year' => $pros->school_year
             ];
+
+            $subs =  json_decode($pros->subjects);
+            $listahan = [];
+            foreach($subs as $sub){
+                $semesters = $sub->semesters;
+                foreach($semesters as $semester){
+                    $listahan[] = [
+                        'year' => $sub->year_level,
+                        'semester' => $semester->semester,
+                        'is_empty' => (count($semester->courses) > 0) ? false : true,
+                        'has_enrolled' => false,
+                        'is_delayed' => false
+                    ];
+                }
+            }
+
             $lists = [];
             array_push($lists, $new);
             $information = [
                 'id' => $pros->id,
                 'year' => $pros->school_year,
                 'lists' => $lists,
+                'is_old' => false,
+                'checker' => $listahan,
                 'prospectus' => json_decode($pros->subjects)
             ];
+            // dd($information);
+            
             $data->subcourse_id = $request->subcourse_id;
             $data->information = json_encode($information);
+            // dd(json_decode($pros->subjects));
             if($data->save()){
                 $data = Scholar::with('profile')
                 ->with('program:id,name','subprogram:id,name','category:id,name','status:id,name,type,color,others')

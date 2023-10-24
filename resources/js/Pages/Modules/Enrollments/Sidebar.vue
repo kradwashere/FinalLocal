@@ -152,6 +152,7 @@ export default {
             }
         },
         viewProspectus(){
+            this.show = 'prospectus';
             this.$parent.prospectus('prospectus',this.scholar.education.info,this.scholar.education.subcourse.id,this.scholar.education.id);
         },
         viewEnroll(enrollment){
@@ -169,6 +170,9 @@ export default {
                     this.show = 'assessment';
                 break;
                 case 'course':
+                    this.choose(list);
+                break;
+                case 'prospectus':
                     this.choose(list);
                 break;
             }

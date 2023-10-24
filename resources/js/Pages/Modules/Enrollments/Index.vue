@@ -1,5 +1,5 @@
 <template>
-    <Head title="Qualifiers" />
+    <Head title="Enrollments" />
     <PageHeader :title="title" :items="items" />
     <div class="chat-wrapper d-lg-flex gap-1 mx-n4 mt-n4 p-1">
         <div class="file-manager-sidebar">
