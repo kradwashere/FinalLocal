@@ -2,6 +2,7 @@
 
 namespace App\Http\Traits\Schools;
 
+use App\Models\ListDropdown;
 use App\Models\Scholar;
 use App\Models\ScholarEnrollment;
 use App\Models\SchoolGrading;
@@ -49,21 +50,11 @@ trait Save {
     }
 
     public static function prospectus($request){
-        $level = ['First Year','Second Year','Third Year','Fourth Year','Fifth Year'];
-        $semester = ['First Semester', 'Second Semester', 'Summer Class'];
-        $trimester = ['First Term', 'Second Term', 'Third Term', 'Midyear'];
-        $quarter = ['First Term', 'Second Term', 'Third Term','Fourth Term'];
-
+        $level = ListDropdown::where('classification','Level')->select('name','others')->get();
         $years = $request->years;
         $term = $request->term;
+        $semesters = ListDropdown::where('classification',$term)->pluck('name');
 
-        if($term == 'Semester'){
-            $semesters = $semester;
-        }else  if($term == 'Trimester'){
-            $semesters = $trimester;
-        }else{
-            $semesters = $quarter;
-        }
         $group = []; $courses = [];
 
         for ($i = 0; $i < $years; ++$i) {
@@ -71,7 +62,11 @@ trait Save {
             foreach($semesters as $key=>$semester){
                 $sem[] = ['semester' => $semester,'total' => 0,'courses' => $courses];
             }
-            $group[] = ['year_level' => $level[$i],'semesters' => $sem];
+            $group[] = [
+                'year_level' => $level[$i]['others'],
+                'year_ordinal' => $level[$i]['name'],
+                'semesters' => $sem
+            ];
         }
         $request['subjects'] = json_encode($group,true);
         $request['added_by'] = \Auth::user()->id;

@@ -71,35 +71,44 @@ trait Updating {
         $data = ScholarEducation::where('scholar_id',$request->id)->first();
 
         $pros = SchoolCourseProspectus::where('school_course_id',$request->subcourse_id)->where('is_active',1)->first();
-        $new = [
-            'id' => $pros->id,
-            'year' => $pros->school_year
-        ];
-        $lists = [];
-        array_push($lists, $new);
-        $information = [
-            'id' => $pros->id,
-            'year' => $pros->school_year,
-            'lists' => $lists,
-            'prospectus' => json_decode($pros->subjects)
-        ];
-        $data->subcourse_id = $request->subcourse_id;
-        $data->information = json_encode($information);
-        if($data->save()){
-            $data = Scholar::with('profile')
-            ->with('program:id,name','subprogram:id,name','category:id,name','status:id,name,type,color,others')
-            ->with('education.school.school','education.school.semesters.semester','education.course','education.level')
-            ->with('enrollments.semester.semester')
-            ->where('id',$request->id)
-            ->first();
-            $data = new SearchResource($data);
+        if($pros){
+            $new = [
+                'id' => $pros->id,
+                'year' => $pros->school_year
+            ];
+            $lists = [];
+            array_push($lists, $new);
+            $information = [
+                'id' => $pros->id,
+                'year' => $pros->school_year,
+                'lists' => $lists,
+                'prospectus' => json_decode($pros->subjects)
+            ];
+            $data->subcourse_id = $request->subcourse_id;
+            $data->information = json_encode($information);
+            if($data->save()){
+                $data = Scholar::with('profile')
+                ->with('program:id,name','subprogram:id,name','category:id,name','status:id,name,type,color,others')
+                ->with('education.school.school','education.school.semesters.semester','education.course','education.level')
+                ->with('enrollments.semester.semester')
+                ->where('id',$request->id)
+                ->first();
+                $data = new SearchResource($data);
 
+                return back()->with([
+                    'message' => 'Subcourse updated successfully.',
+                    'data' => $data,
+                    'type' => 'bxs-check-circle',
+                    'color' => 'success'
+                ]); 
+            }   
+        }else{
             return back()->with([
-                'message' => 'Subcourse updated successfully.',
-                'data' => $data,
-                'type' => 'bxs-check-circle',
-                'color' => 'success'
+                'message' => 'No active prospectus found.',
+                'data' => '',
+                'type' => 'ri-close-circle-fill',
+                'color' => 'danger'
             ]); 
-        }   
+        }
     }
 }
