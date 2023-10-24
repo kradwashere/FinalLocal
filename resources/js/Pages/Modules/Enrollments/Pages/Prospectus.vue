@@ -46,25 +46,49 @@
             </div>
         </div>
     </div>
+    <Prospectus ref="prospectus"/>
 </template>
 <script>
+import Prospectus from '../Modals/Prospectus.vue';
 export default {
     inject: ['height'],
+    components: { Prospectus },
     data(){
         return {
             currentUrl: window.location.origin,
             pros: {},
-            updated_at: ''
+            updated_at: '',
+            active: 'wew',
+            id: '',
+            education_id: ''
         }
     },
 
     methods : {
-        set(prospectus){
+        set(prospectus,id,education_id){
+            this.id = id;
+            this.education_id = education_id;
             this.pros = prospectus;
+            this.fetchActive();
         },
         back(){
             this.$parent.set('default');
-        }
+        },
+        fetchActive(){
+            axios.get(this.currentUrl+'/schools', {
+                params: {
+                    type: 'activeprospectus',
+                    school_course_id: this.id
+                }
+            })
+            .then(response => {
+                this.active = response.data;
+                if(this.active.id != this.pros.id){
+                    this.$refs.prospectus.show(this.active,this.education_id,this.id);
+                }
+            })
+            .catch(err => console.log(err));
+        },
     }
 }
 </script>

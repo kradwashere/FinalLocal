@@ -33,6 +33,9 @@ class SchoolController extends Controller
             case 'activesemester':
                 return $this->activesemester($request);
             break;
+            case 'activeprospectus':
+                return $this->activeprospectus($request);
+            break;
             case 'courses':
                 return $this->courses($request);
             break;
@@ -79,6 +82,9 @@ class SchoolController extends Controller
         switch($request->type){
             case 'prospectus': 
                 return $this->updateProspectus($request);
+            break;
+            case 'newprospectus': 
+                return $this->newProspectus($request);
             break;
             case 'lock': 
                 return $this->lock($request);

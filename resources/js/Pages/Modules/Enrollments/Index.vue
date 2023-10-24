@@ -33,10 +33,10 @@ export default {
         };
     },
     methods: {
-        prospectus(type,data){
+        prospectus(type,data,id,education_id){
             this.show = type; 
             this.$nextTick(function () {
-                this.$refs.prospectus.set(data)
+                this.$refs.prospectus.set(data,id,education_id)
             });
         },
         enroll(type,scholar,enrollment){

@@ -70,8 +70,17 @@ trait Updating {
     public function course($request){
         $data = ScholarEducation::where('scholar_id',$request->id)->first();
 
-        $pros = SchoolCourseProspectus::where('school_course_id',$request->subcourse_id)->latest()->first();
+        $pros = SchoolCourseProspectus::where('school_course_id',$request->subcourse_id)->where('is_active',1)->first();
+        $new = [
+            'id' => $pros->id,
+            'year' => $pros->school_year
+        ];
+        $lists = [];
+        array_push($lists, $new);
         $information = [
+            'id' => $pros->id,
+            'year' => $pros->school_year,
+            'lists' => $lists,
             'prospectus' => json_decode($pros->subjects)
         ];
         $data->subcourse_id = $request->subcourse_id;

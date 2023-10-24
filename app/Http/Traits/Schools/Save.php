@@ -55,11 +55,11 @@ trait Save {
         $quarter = ['First Term', 'Second Term', 'Third Term','Fourth Term'];
 
         $years = $request->years;
-        $type = $request->subtype;
+        $term = $request->term;
 
-        if($type == 'Semester'){
+        if($term == 'Semester'){
             $semesters = $semester;
-        }else  if($type == 'Trimester'){
+        }else  if($term == 'Trimester'){
             $semesters = $trimester;
         }else{
             $semesters = $quarter;

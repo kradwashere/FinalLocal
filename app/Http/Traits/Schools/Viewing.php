@@ -9,6 +9,7 @@ use App\Models\ListCourse;
 use App\Models\SchoolCourse;
 use App\Models\SchoolCampus;
 use App\Models\SchoolSemester;
+use App\Models\SchoolCourseProspectus;
 use App\Models\ScholarEnrollment;
 use App\Http\Resources\DefaultResource;
 use App\Http\Resources\School\ListResource;
@@ -222,5 +223,10 @@ trait Viewing {
         ->orderBy('scholars_count', $request->sort)
         ->paginate(10);
         return DefaultResource::collection($data);
+    }
+
+    public static function activeprospectus($request){
+        $data = SchoolCourseProspectus::where('is_active',1)->where('school_course_id',$request->school_course_id)->first();
+        return $data;
     }
 }

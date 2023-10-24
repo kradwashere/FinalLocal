@@ -2058,10 +2058,10 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    prospectus: function prospectus(type, data) {
+    prospectus: function prospectus(type, data, id, education_id) {
       this.show = type;
       this.$nextTick(function () {
-        this.$refs.prospectus.set(data);
+        this.$refs.prospectus.set(data, id, education_id);
       });
     },
     enroll: function enroll(type, scholar, enrollment) {
@@ -2503,6 +2503,57 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Modules/Enrollments/Modals/Prospectus.vue?vue&type=script&lang=js":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Modules/Enrollments/Modals/Prospectus.vue?vue&type=script&lang=js ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      currentUrl: window.location.origin,
+      showModal: false,
+      isLoading: false,
+      prospectus: 0,
+      education_id: '',
+      id: ''
+    };
+  },
+  methods: {
+    show: function show(data, education_id, id) {
+      this.id = id;
+      this.education_id = education_id;
+      this.prospectus = data;
+      this.showModal = true;
+    },
+    save: function save() {
+      var _this = this;
+      this.form = this.$inertia.form({
+        id: this.education_id,
+        subcourse_id: this.id,
+        type: 'newprospectus'
+      });
+      this.form.put('/schools/update', {
+        preserveScroll: true,
+        onSuccess: function onSuccess(response) {
+          _this.showModal = false;
+        }
+      });
+    },
+    hide: function hide() {
+      this.showModal = false;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Modules/Enrollments/Modals/Switch.vue?vue&type=script&lang=js":
 /*!**********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Modules/Enrollments/Modals/Switch.vue?vue&type=script&lang=js ***!
@@ -2895,21 +2946,48 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _Modals_Prospectus_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Modals/Prospectus.vue */ "./resources/js/Pages/Modules/Enrollments/Modals/Prospectus.vue");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   inject: ['height'],
+  components: {
+    Prospectus: _Modals_Prospectus_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
       currentUrl: window.location.origin,
       pros: {},
-      updated_at: ''
+      updated_at: '',
+      active: 'wew',
+      id: '',
+      education_id: ''
     };
   },
   methods: {
-    set: function set(prospectus) {
+    set: function set(prospectus, id, education_id) {
+      this.id = id;
+      this.education_id = education_id;
       this.pros = prospectus;
+      this.fetchActive();
     },
     back: function back() {
       this.$parent.set('default');
+    },
+    fetchActive: function fetchActive() {
+      var _this = this;
+      axios.get(this.currentUrl + '/schools', {
+        params: {
+          type: 'activeprospectus',
+          school_course_id: this.id
+        }
+      }).then(function (response) {
+        _this.active = response.data;
+        if (_this.active.id != _this.pros.id) {
+          _this.$refs.prospectus.show(_this.active, _this.education_id, _this.id);
+        }
+      })["catch"](function (err) {
+        return console.log(err);
+      });
     }
   }
 });
@@ -2995,7 +3073,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     viewProspectus: function viewProspectus() {
-      this.$parent.prospectus('prospectus', this.scholar.education.info);
+      this.$parent.prospectus('prospectus', this.scholar.education.info, this.scholar.education.subcourse.id, this.scholar.education.id);
     },
     viewEnroll: function viewEnroll(enrollment) {
       this.show = 'enroll';
@@ -8368,6 +8446,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   methods: {
     show: function show(data) {
       this.course = data;
+      console.log(data);
       this.showModal = true;
     },
     newProspectus: function newProspectus(data) {
@@ -8641,7 +8720,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['type'],
+  props: ['term'],
   data: function data() {
     return {
       showModal: false,
@@ -8666,7 +8745,7 @@ __webpack_require__.r(__webpack_exports__);
         school_course_id: this.id,
         years: this.years,
         editable: false,
-        subtype: this.type,
+        term: this.term,
         type: 'prospectus'
       });
       this.form.post('/schools', {
@@ -17135,6 +17214,73 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Modules/Enrollments/Modals/Prospectus.vue?vue&type=template&id=00329152":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Modules/Enrollments/Modals/Prospectus.vue?vue&type=template&id=00329152 ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "modal-body text-center"
+};
+var _hoisted_2 = {
+  "class": "mt-n3"
+};
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "ri-alert-fill fs-24 text-danger mb-4"
+}, null, -1 /* HOISTED */);
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "mb-2 mt-2"
+}, "We have identified some changes in your prospectus.", -1 /* HOISTED */);
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "text-muted fs-11 mb-4"
+}, "To prevent future errors, please ensure the prospectus is updated accordingly, as enrollment is based on the prospectus.", -1 /* HOISTED */);
+var _hoisted_6 = {
+  "class": "hstack gap-2 justify-content-center mt-3"
+};
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_lottie = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("lottie");
+  var _component_b_modal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("b-modal");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_b_modal, {
+    modelValue: $data.showModal,
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return $data.showModal = $event;
+    }),
+    title: "Prospectus",
+    "hide-footer": "",
+    "header-class": "p-3 bg-light",
+    "class": "v-modal-custom",
+    "modal-class": "zoomIn",
+    centered: "",
+    "no-close-on-backdrop": ""
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_lottie, {
+        colors: "primary:#121331,secondary:#08a88a",
+        trigger: "loop",
+        options: _ctx.defaultOptions1,
+        height: 120,
+        width: 120
+      }, null, 8 /* PROPS */, ["options"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <h4 class=\"mb-3\">You've made it!</h4> "), _hoisted_3, _hoisted_4, _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        onClick: _cache[0] || (_cache[0] = function ($event) {
+          return $options.save();
+        }),
+        "class": "btn btn-primary"
+      }, "Update now")])])])];
+    }),
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["modelValue"]);
+}
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Modules/Enrollments/Modals/Switch.vue?vue&type=template&id=24b12e5c":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Modules/Enrollments/Modals/Switch.vue?vue&type=template&id=24b12e5c ***!
@@ -17835,6 +17981,7 @@ var _hoisted_13 = {
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_b_col = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("b-col");
   var _component_b_row = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("b-row");
+  var _component_Prospectus = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Prospectus", true);
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_b_row, {
     "class": "mb-4"
   }, {
@@ -17880,7 +18027,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }), 128 /* KEYED_FRAGMENT */))]))]);
       }), 128 /* KEYED_FRAGMENT */))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2 /* CLASS */);
     }), 128 /* KEYED_FRAGMENT */))])], 2 /* CLASS */);
-  }), 128 /* KEYED_FRAGMENT */))], 4 /* STYLE */)])], 64 /* STABLE_FRAGMENT */);
+  }), 128 /* KEYED_FRAGMENT */))], 4 /* STYLE */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Prospectus, {
+    ref: "prospectus"
+  }, null, 512 /* NEED_PATCH */)], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -29752,10 +29901,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Prospectus, {
-    type: $props.term,
+    term: $props.term,
     onStatus: _ctx.update,
     ref: "prospectus"
-  }, null, 8 /* PROPS */, ["type", "onStatus"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Lock, {
+  }, null, 8 /* PROPS */, ["term", "onStatus"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Lock, {
     ref: "lock"
   }, null, 512 /* NEED_PATCH */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Status, {
     ref: "status"
@@ -31029,9 +31178,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     links: $data.links,
     pagination: $data.meta
   }, null, 8 /* PROPS */, ["onFetch", "lists", "links", "pagination"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Course, {
-    type: $props.term,
+    term: $props.term,
     ref: "course"
-  }, null, 8 /* PROPS */, ["type"])], 64 /* STABLE_FRAGMENT */);
+  }, null, 8 /* PROPS */, ["term"])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -38371,6 +38520,34 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/Pages/Modules/Enrollments/Modals/Prospectus.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/Pages/Modules/Enrollments/Modals/Prospectus.vue ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Prospectus_vue_vue_type_template_id_00329152__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Prospectus.vue?vue&type=template&id=00329152 */ "./resources/js/Pages/Modules/Enrollments/Modals/Prospectus.vue?vue&type=template&id=00329152");
+/* harmony import */ var _Prospectus_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Prospectus.vue?vue&type=script&lang=js */ "./resources/js/Pages/Modules/Enrollments/Modals/Prospectus.vue?vue&type=script&lang=js");
+/* harmony import */ var D_FINAL_STSIMS_FinalLocal_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,D_FINAL_STSIMS_FinalLocal_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Prospectus_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Prospectus_vue_vue_type_template_id_00329152__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/Pages/Modules/Enrollments/Modals/Prospectus.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/Pages/Modules/Enrollments/Modals/Switch.vue":
 /*!******************************************************************!*\
   !*** ./resources/js/Pages/Modules/Enrollments/Modals/Switch.vue ***!
@@ -41931,6 +42108,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Pages/Modules/Enrollments/Modals/Prospectus.vue?vue&type=script&lang=js":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/Pages/Modules/Enrollments/Modals/Prospectus.vue?vue&type=script&lang=js ***!
+  \**********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Prospectus_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Prospectus_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Prospectus.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Modules/Enrollments/Modals/Prospectus.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/Pages/Modules/Enrollments/Modals/Switch.vue?vue&type=script&lang=js":
 /*!******************************************************************************************!*\
   !*** ./resources/js/Pages/Modules/Enrollments/Modals/Switch.vue?vue&type=script&lang=js ***!
@@ -44107,6 +44300,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Pages/Modules/Enrollments/Modals/Prospectus.vue?vue&type=template&id=00329152":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/Pages/Modules/Enrollments/Modals/Prospectus.vue?vue&type=template&id=00329152 ***!
+  \****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Prospectus_vue_vue_type_template_id_00329152__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Prospectus_vue_vue_type_template_id_00329152__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Prospectus.vue?vue&type=template&id=00329152 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Modules/Enrollments/Modals/Prospectus.vue?vue&type=template&id=00329152");
+
+
+/***/ }),
+
 /***/ "./resources/js/Pages/Modules/Enrollments/Modals/Switch.vue?vue&type=template&id=24b12e5c":
 /*!************************************************************************************************!*\
   !*** ./resources/js/Pages/Modules/Enrollments/Modals/Switch.vue?vue&type=template&id=24b12e5c ***!
@@ -46269,6 +46478,8 @@ var map = {
 	"./Modules/Enrollments/Modals/Custom.vue": "./resources/js/Pages/Modules/Enrollments/Modals/Custom.vue",
 	"./Modules/Enrollments/Modals/Lock": "./resources/js/Pages/Modules/Enrollments/Modals/Lock.vue",
 	"./Modules/Enrollments/Modals/Lock.vue": "./resources/js/Pages/Modules/Enrollments/Modals/Lock.vue",
+	"./Modules/Enrollments/Modals/Prospectus": "./resources/js/Pages/Modules/Enrollments/Modals/Prospectus.vue",
+	"./Modules/Enrollments/Modals/Prospectus.vue": "./resources/js/Pages/Modules/Enrollments/Modals/Prospectus.vue",
 	"./Modules/Enrollments/Modals/Switch": "./resources/js/Pages/Modules/Enrollments/Modals/Switch.vue",
 	"./Modules/Enrollments/Modals/Switch.vue": "./resources/js/Pages/Modules/Enrollments/Modals/Switch.vue",
 	"./Modules/Enrollments/Pages/Assessment": "./resources/js/Pages/Modules/Enrollments/Pages/Assessment.vue",

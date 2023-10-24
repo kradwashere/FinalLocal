@@ -18,7 +18,7 @@
 </template>
 <script>
 export default {
-    props: ['type'],
+    props: ['term'],
     data(){
         return {
             showModal: false,
@@ -44,7 +44,7 @@ export default {
                 school_course_id : this.id,
                 years : this.years,
                 editable: false,
-                subtype: this.type,
+                term: this.term,
                 type: 'prospectus'
             })
 

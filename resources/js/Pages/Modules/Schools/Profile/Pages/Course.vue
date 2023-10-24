@@ -35,7 +35,7 @@
         </table>
         <Pagination class="ms-2 me-2" v-if="meta" @fetch="fetch" :lists="lists.length" :links="links" :pagination="meta" />
     </div>    
-    <Course :type="term" ref="course"/>
+    <Course :term="term" ref="course"/>
 </template>
 <script>
 import Course from '../Modals/Course.vue';

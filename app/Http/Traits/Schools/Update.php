@@ -3,6 +3,7 @@
 namespace App\Http\Traits\Schools;
 
 use App\Models\SchoolCourseProspectus;
+use App\Models\ScholarEducation;
 
 trait Update { 
     
@@ -16,6 +17,31 @@ trait Update {
             'type' => 'bxs-check-circle',
             'color' => 'success'
         ]);
+    }
+
+    public static function newProspectus($request){
+        $data = ScholarEducation::where('id',$request->id)->first();
+        $pros = SchoolCourseProspectus::where('school_course_id',$request->subcourse_id)->where('is_active',1)->first();
+        $new = [
+            'id' => $pros->id,
+            'year' => $pros->school_year
+        ];
+        $prospectus = json_decode($data->information,true);
+        $prospectus['id'] = $pros->id;
+        $prospectus['year'] = $pros->school_year;
+        array_unshift($prospectus['lists'], $new);
+        // dd($prospectus);
+        
+        // $information = [
+        //     'id' => $pros->id,
+        //     'year' => $pros->school_year,
+        //     'lists' => $lists,
+        //     'prospectus' => json_decode($pros->subjects)
+
+            
+        // ];
+        $data->information = json_encode($prospectus);
+        $data->save();
     }
 
     public static function lock($request){

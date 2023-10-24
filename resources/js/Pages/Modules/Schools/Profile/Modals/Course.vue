@@ -156,13 +156,12 @@
                                 </div>
                             </b-tab>
                         </b-tabs>
-
                     </div>
                 </b-form>
             </div>
         </div> 
     </b-modal>
-    <Prospectus :type="term" @status="update" ref="prospectus"/>
+    <Prospectus :term="term" @status="update" ref="prospectus"/>
     <Lock ref="lock"/>
     <Status ref="status"/>
 </template>
@@ -238,6 +237,7 @@ export default {
     methods: {
         show(data) {
             this.course = data;
+            console.log(data);
             this.showModal = true;
         },
         newProspectus(data){
@@ -257,16 +257,13 @@ export default {
             //      {{semesters[0].semesters[0].courses}}
             this.semesters[one].semesters[two].courses.push({code: '',subject: '',unit: '',is_lab: false,is_nonacademic: false})
         },
-
         rmv(one,two,three){
             // this.lists.splice(index, 1);
             this.semesters[one].semesters[two].courses.splice(three,1);
         },
-
         chck(index){
             this.a = index;
         },
-
         save(){
             this.form.id = this.prospectus.id;
             this.form.subjects = this.updated;
@@ -276,7 +273,6 @@ export default {
                 onSuccess: (response) => {}
             });
         },
-
         nxt(type){
             (type == 'next') ? this.tabIndex++ : this.tabIndex--;
             this.tabIndex2 = 0;

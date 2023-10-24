@@ -152,7 +152,7 @@ export default {
             }
         },
         viewProspectus(){
-            this.$parent.prospectus('prospectus',this.scholar.education.info);
+            this.$parent.prospectus('prospectus',this.scholar.education.info,this.scholar.education.subcourse.id,this.scholar.education.id);
         },
         viewEnroll(enrollment){
             this.show = 'enroll';
