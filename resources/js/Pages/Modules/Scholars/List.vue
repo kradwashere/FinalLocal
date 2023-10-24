@@ -180,7 +180,6 @@ export default {
             };
 
             info = (Object.keys(info).length == 0) ? '-' : JSON.stringify(info);
-            this.subfilters = (Object.keys(this.subfilters).length == 0) ? '-' : JSON.stringify(this.subfilters);
 
             page_url = page_url || '/scholars';
             axios.get(page_url, {
@@ -199,6 +198,7 @@ export default {
         },
         subfilter(list){
             this.subfilters = list;
+            this.subfilters = (Object.keys(this.subfilters).length == 0) ? '-' : JSON.stringify(this.subfilters);
             this.fetch();
         },
         showFilter(){
