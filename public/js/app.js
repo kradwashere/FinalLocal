@@ -6049,6 +6049,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     show: function show(data) {
       this.viewScholar = false;
+      this.option = '';
       this.scholars = data;
       this.showModal = true;
     },
@@ -6089,6 +6090,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     view: function view(data) {
       this.scholar = data;
+      this.option = '';
       this.viewScholar = true;
     },
     hide: function hide() {
@@ -8738,7 +8740,6 @@ __webpack_require__.r(__webpack_exports__);
       this.showModal = true;
     },
     add: function add(one, two) {
-      //      {{semesters[0].semesters[0].courses}}
       this.semesters[one].semesters[two].courses.push({
         code: '',
         subject: '',
@@ -8748,7 +8749,6 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     rmv: function rmv(one, two, three) {
-      // this.lists.splice(index, 1);
       this.semesters[one].semesters[two].courses.splice(three, 1);
     },
     chck: function chck(index) {

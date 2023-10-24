@@ -160,6 +160,7 @@
         methods: {
             show(data) {
                 this.viewScholar = false;
+                this.option = '';
                 this.scholars = data;
                 this.showModal = true;
             },
@@ -199,6 +200,7 @@
             },
             view(data){
                 this.scholar= data;
+                this.option = '';
                 this.viewScholar = true;
             },
             hide(){

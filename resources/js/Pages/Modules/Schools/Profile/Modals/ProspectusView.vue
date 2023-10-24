@@ -144,19 +144,14 @@ export default {
             this.showModal = true;
         },
         add(one,two){
-            //      {{semesters[0].semesters[0].courses}}
             this.semesters[one].semesters[two].courses.push({code: '',subject: '',unit: '',is_lab: false,is_nonacademic: false})
         },
-
         rmv(one,two,three){
-            // this.lists.splice(index, 1);
             this.semesters[one].semesters[two].courses.splice(three,1);
         },
-
         chck(index){
             this.a = index;
         },
-
         save(){
             this.form.id = this.prospectus.id;
             this.form.subjects = this.updated;
@@ -166,12 +161,10 @@ export default {
                 onSuccess: (response) => {}
             });
         },
-
         nxt(type){
             (type == 'next') ? this.tabIndex++ : this.tabIndex--;
             this.tabIndex2 = 0;
         },
-
         totalUnits(lists){
             var sum = 0;
             if(lists != undefined){
